@@ -39,14 +39,24 @@ driver.quit()
 soup = BeautifulSoup(html, 'html.parser')
 
 # In[38]
-# Locate tbody containing the rows
-table_body = soup.find("tbody")
+# Locate the specific table by its ID
+table = soup.find("table", {"id": "champions_index"}) # Adjust the ID based on the table you inspected
+print(table)
 
-# Find all rows with data-row attribute
+
+# In[38]
+# Locate tbody containing the rows
+table_body = table.find("tbody")
+
+# Step 3: Extract all rows with the `data-row` attribute
 rows = table_body.find_all("tr", {"data-row": True})
 
 print("Total rows found:", len(rows))
-print("Sample row structure:", rows[0])  # Print the first row as a sample
+if len(rows) > 0:
+    print("Sample row structure:", rows[0])  # Print the first row as a sample
+else:
+    print("No rows found.")
+
 
 # In[39]
 
@@ -107,6 +117,6 @@ filtered_playoff_data = [row for row in playoff_data if 1999 <= int(row["Year"])
 filtered_playoff_df = pd.DataFrame(filtered_playoff_data)
 
 # Save the DataFrame to a CSV file
-filtered_playoff_df.to_csv("nba_playoffs_1999_2024.csv", index=False)
+filtered_playoff_df.to_csv("nba_champions_1999_2024.csv", index=False)
 
-print("Data saved to nba_playoffs_1999_2024.csv")
+print("Data saved to nba_champions_1999_2024.csv")
