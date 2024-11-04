@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
 import time
+import os
 
 # In[35]:
 
@@ -34,6 +35,9 @@ driver.quit()
 
 # In[37]:
 
+# Create the 'data' folder if it doesn't exist
+if not os.path.exists('data'):
+    os.makedirs('data')
 
 # Step 3: Parse the HTML using BeautifulSoup
 soup = BeautifulSoup(html, 'html.parser')
@@ -117,6 +121,6 @@ filtered_playoff_data = [row for row in playoff_data if 1999 <= int(row["Year"])
 filtered_playoff_df = pd.DataFrame(filtered_playoff_data)
 
 # Save the DataFrame to a CSV file
-filtered_playoff_df.to_csv("nba_champions_1999_2024.csv", index=False)
+filtered_playoff_df.to_csv("data/nba_champions_1999_2024.csv", index=False)
 
 print("Data saved to nba_champions_1999_2024.csv")

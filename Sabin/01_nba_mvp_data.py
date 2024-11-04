@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
 import time
+import os
 
 # In[35]:
 
@@ -19,7 +20,9 @@ service = Service(executable_path=driver_path)
 driver = webdriver.Chrome(service=service)
 
 # In[36]:
-
+# Create the 'data' folder if it doesn't exist
+if not os.path.exists('data'):
+    os.makedirs('data')
 
 # Step 2: Open the page using Selenium
 url = 'https://www.basketball-reference.com/awards/mvp.html'
@@ -33,7 +36,6 @@ html = driver.page_source
 driver.quit()
 
 # In[37]:
-
 
 # Step 3: Parse the HTML using BeautifulSoup
 soup = BeautifulSoup(html, 'html.parser')
@@ -92,11 +94,10 @@ print(mvp_df.head())
 
 
 # Step 11: Save the DataFrame to a CSV file
-mvp_df.to_csv('nba_mvp_data_1999_2023.csv', index=False)
+mvp_df.to_csv('data/nba_mvp_data_1999_2024.csv', index=False)
 
-print("Data saved to nba_mvp_data_1999_2023.csv")
+print("Data saved to nba_mvp_data_1999_2024.csv")
 
-# In[ ]:
 
 
 
