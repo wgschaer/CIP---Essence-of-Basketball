@@ -16,7 +16,7 @@ service = Service(executable_path=driver_path)
 driver = webdriver.Chrome(service=service)
 
 # Open the base URL for NBA team stats
-url = 'https://www.nba.com/stats/teams/traditional'
+url = 'https://www.nba.com/stats/teams/advanced'
 driver.get(url)
 
 # Create the 'data' folder if it doesn't exist
@@ -73,7 +73,7 @@ for option in select_season.options:
 
     # Extract table headers (column names)
     headers = [th.text.strip() for th in table.find_all('th')]
-    headers = headers[:28]  # Trim headers to match the actual number of columns
+    headers = headers[:21]  # Trim headers to match the actual number of columns
 
     # Extract rows from the table
     rows = []
