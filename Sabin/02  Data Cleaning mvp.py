@@ -3,14 +3,14 @@ import pandas as pd
 
 # Load the data from CSV files
 # Load the MVP data
-mvp_df = pd.read_csv('data/nba_mvp_data_1999_2024.csv')
+mvp_df = pd.read_csv('data/nba_mvp_data_2004_2024.csv')
 print("MVP Data - First 5 Rows:")
 print(mvp_df.head())
 print("\nMissing Values in MVP Data:")
 print(mvp_df.isnull().sum()) #checking for missing values
 
 # Load the Champions data
-champions_df = pd.read_csv('data/nba_champions_1999_2024.csv')
+champions_df = pd.read_csv('data/nba_champions_2004_2024.csv')
 print("\nChampions Data - First 5 Rows:")
 print(champions_df.head())
 print("\nMissing Values in Champions Data:")

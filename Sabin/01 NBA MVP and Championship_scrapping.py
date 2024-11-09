@@ -64,13 +64,13 @@ def extract_mvp_data():
         if len(columns) == len(headers):
             mvp_data.append([col.getText() for col in columns])
 
-    # Filter the data for the years between 1999 and 2024
-    filtered_mvp_data = [row for row in mvp_data if '1999' <= row[0] <= '2024']
+    # Filter the data for the years between 2004 and 2024
+    filtered_mvp_data = [row for row in mvp_data if '2004' <= row[0] <= '2024']
     mvp_df = pd.DataFrame(filtered_mvp_data, columns=headers)
 
     # Save the extracted data to a CSV file
-    mvp_df.to_csv('data/nba_mvp_data_1999_2024.csv', index=False)
-    print("MVP data saved to 'data/nba_mvp_data_1999_2024.csv'")
+    mvp_df.to_csv('data/nba_mvp_data_2004_2024.csv', index=False)
+    print("MVP data saved to 'data/nba_mvp_data_2004_2024.csv'")
     print(mvp_df.head())
 
 
@@ -126,13 +126,13 @@ def extract_playoffs_data():
                 "Win Shares Leader": win_shares_leader_tag.get_text() if win_shares_leader_tag else ""
             })
 
-    # Filter the data for the years between 1999 and 2024
-    filtered_playoff_data = [row for row in playoff_data if '2000' <= row["Year"] <= '2024']
+    # Filter the data for the years between 2003 and 2024
+    filtered_playoff_data = [row for row in playoff_data if '2005' <= row["Year"] <= '2024']
     playoff_df = pd.DataFrame(filtered_playoff_data)
 
     # Save the extracted data to a CSV file
-    playoff_df.to_csv('data/nba_champions_1999_2024.csv', index=False)
-    print("Playoffs data saved to 'data/nba_champions_1999_2024.csv'")
+    playoff_df.to_csv('data/nba_champions_2004_2024.csv', index=False)
+    print("Playoffs data saved to 'data/nba_champions_2004_2024.csv'")
     print(playoff_df.head())
 
 
