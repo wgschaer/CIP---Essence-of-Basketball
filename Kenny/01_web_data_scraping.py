@@ -42,7 +42,7 @@ season_type_dropdown = driver.find_elements(By.CLASS_NAME, "DropDown_select__4pI
 select_season_type = Select(season_type_dropdown)
 
 # Define the range of seasons to scrape
-target_seasons = [f"{year}-{str(year+1)[-2:]}" for year in range(2003, 2024)]
+target_seasons = [f"{year}-{str(year+1)[-2:]}" for year in range(2004, 2024)]
 
 # Loop over each option (season) in the drop-down
 for option in select_season.options:
@@ -101,10 +101,10 @@ for option in select_season.options:
 # After the loop, combine all data into one DataFrame and save it to a single CSV file
 all_headers = headers + ['Season']
 all_seasons_data = pd.DataFrame(all_data, columns=all_headers)
-all_seasons_data.to_csv('data/nba_team_stats_2003_2024.csv', index=False)
+all_seasons_data.to_csv('data/nba_team_stats_2004_2024.csv', index=False)
 
-print("All data from 2003-04 to 2023-24 seasons has been successfully combined and saved to "
-      "'data/nba_team_stats_2003_2024.csv'.")
+print("All data from 2004-05 to 2023-24 seasons has been successfully combined and saved to "
+      "'data/nba_team_stats_2004_2024.csv'.")
 
 # Close the browser
 driver.quit()
