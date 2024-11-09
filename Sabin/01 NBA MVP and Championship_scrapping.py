@@ -127,7 +127,7 @@ def extract_playoffs_data():
             })
 
     # Filter the data for the years between 1999 and 2024
-    filtered_playoff_data = [row for row in playoff_data if '1999' <= row["Year"] <= '2024']
+    filtered_playoff_data = [row for row in playoff_data if '2000' <= row["Year"] <= '2024']
     playoff_df = pd.DataFrame(filtered_playoff_data)
 
     # Save the extracted data to a CSV file
