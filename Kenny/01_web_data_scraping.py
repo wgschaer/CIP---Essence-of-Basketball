@@ -25,7 +25,7 @@ with webdriver.Chrome(service=service) as driver:
     all_data = []
 
     # Wait for the drop-down elements to load
-    WebDriverWait(driver, 20).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "DropDown_select__4pIg9")))
+    WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "DropDown_select__4pIg9")))
 
     # Locate the Season and Season Type drop-down elements
     dropdowns = driver.find_elements(By.CLASS_NAME, "DropDown_select__4pIg9")
@@ -45,7 +45,7 @@ with webdriver.Chrome(service=service) as driver:
             select_season_type.select_by_visible_text("Regular Season")
 
             # Wait for the table to load
-            WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, 'Crom_container__C45Ti')))
+            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CLASS_NAME, 'Crom_container__C45Ti')))
 
             # Parse the page content
             soup = BeautifulSoup(driver.page_source, 'html.parser')
