@@ -60,7 +60,8 @@ for col in percentage_columns:
 
 # Step 9: Display the final cleaned data
 print("\nCleaned Merged Data - First 5 Rows:")
-print(merged_df[['Year', 'Season MVP', 'MVP Team', 'Champion Team', 'Finals MVP', 'PTS', 'TRB', 'AST', 'FG%', '3P%', 'FT%']].head())
+print(merged_df[['Year','Season MVP','MVP Team','Champion Team','Finals MVP','PTS','TRB','AST','FG%','3P%','FT%']]
+      .head())
 
 # Step 10: Save the cleaned data to a new CSV file
 final_output_path = 'data/cleaned_nba_data_mvp_with_teams.csv'
