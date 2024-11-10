@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
 
 # Import necessary libraries
 from selenium import webdriver
