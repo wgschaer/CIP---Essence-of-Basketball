@@ -10,7 +10,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import pandas as pd
-import time
 import os
 
 # Step 1: Set up Selenium WebDriver (replace with your ChromeDriver path)
