@@ -3,11 +3,11 @@ import pandas as pd
 import os
 
 # Create the 'data' folder if it doesn't exist
-os.makedirs("data", exist_ok=True)
+os.makedirs("../data", exist_ok=True)
 
 # Load the new MVP dataset and the team stats dataset
-mvp_stats_file = "Sabin/data/cleaned_nba_data_mvp_with_teams.csv"
-team_stats_file = "Kenny/data/cleaned_nba_team_stats_2004_2024.csv"
+mvp_stats_file = "../Sabin/data/cleaned_nba_data_mvp_with_teams.csv"
+team_stats_file = "data/cleaned_nba_team_stats_2004_2024.csv"
 
 # Read the CSV files
 mvp_stats = pd.read_csv(mvp_stats_file)
