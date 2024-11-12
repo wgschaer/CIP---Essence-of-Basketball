@@ -1,93 +1,74 @@
-import csv
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
-from selenium.common.exceptions import TimeoutException
+from bs4 import BeautifulSoup
 import pandas as pd
+import os
 
-# Set up the Firefox WebDriver
-geckodriver_path = "/Users/mircoschar/Desktop/geckodriver"  # Update the path if needed
-service = Service(geckodriver_path)
-driver = webdriver.Firefox(service=service)
+# Initialize Selenium WebDriver (Chrome) with your custom filepath
+driver_path = "/Users/mircoschar/Desktop/chromedriver-mac-arm64/chromedriver"  # Your custom ChromeDriver path
+service = Service(executable_path=driver_path)
+driver = webdriver.Chrome(service=service)
+wait = WebDriverWait(driver, 10)
 
-try:
-    # Open the NBA stats page
-    driver.get("https://www.nba.com/stats/players/traditional")
+# Create the 'data' folder if it doesn't exist
+os.makedirs('data', exist_ok=True)
 
-    # Save the page source to a file for analysis
-    with open("page_source.html", "w", encoding="utf-8") as file:
-        file.write(driver.page_source)
-    print("Page source saved to page_source.html")
+# List of seasons to scrape
+seasons = [f"{year}-{str(year + 1)[-2:]}" for year in range(2004, 2024)]
 
-    # Increase wait time to ensure the page loads fully
-    wait = WebDriverWait(driver, 60)  # 60-second timeout
+# Loop through each season and scrape data
+for season in seasons:
+    try:
+        # Open the NBA stats page for the current season
+        url = f"https://www.nba.com/stats/players/traditional?Season={season}&PlayerPosition=F"
+        driver.get(url)
 
-    # Wait for the "Position" dropdown to be visible and interactable
-    position_dropdown = wait.until(
-        EC.element_to_be_clickable((By.XPATH, "//select[@aria-label='Position']"))
-    )
-    # Select "Forward" from the "Position" dropdown
-    select_position = Select(position_dropdown)
-    select_position.select_by_visible_text("Forward")
+        # Wait for the drop-down elements to load
+        WebDriverWait(driver, 30).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "DropDown_select__4pIg9")))
 
-    # Wait for the "Team" dropdown to be visible and interactable
-    team_dropdown = wait.until(
-        EC.element_to_be_clickable((By.XPATH, "//select[@aria-label='Team']"))
-    )
-    select_team = Select(team_dropdown)
-    select_team.select_by_visible_text("All Teams")
+        # Locate the Page drop-down elements
+        dropdowns = driver.find_elements(By.CLASS_NAME, "DropDown_select__4pIg9")
+        select_page = Select(dropdowns[-1])
 
-    # Wait for the table to be fully loaded
-    table = wait.until(EC.presence_of_element_located((By.XPATH, "//table")))
+        # Select "All" from the drop-down to load all pages
+        select_page.select_by_visible_text("All")
 
-    # Extract rows from the table
-    rows = table.find_elements(By.TAG_NAME, "tr")
+        # Wait for the table to load
+        WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.CLASS_NAME, 'Crom_container__C45Ti')))
 
-    # Prepare data for CSV output
-    data_list = []
+        # Parse the page content
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        table = soup.find('div', class_='Crom_container__C45Ti').find('table')
 
-    # Loop through rows and extract only the relevant data
-    for row in rows:
-        cells = row.find_elements(By.TAG_NAME, "td")
-        if len(cells) >= 24:  # Ensure there are enough cells to extract
-            player = cells[1].text  # Player name
-            team = cells[2].text    # Team
-            pts = cells[6].text     # Points (PTS)
-            reb = cells[18].text    # Rebounds (REB)
-            data = [player, team, pts, reb]
-            data_list.append(data)
+        # Extract headers and rows
+        headers = [th.text.strip() for th in table.find_all('th')]
+        rows = [[td.text.strip() for td in tr.find_all('td')] for tr in table.find_all('tr')[1:]]
 
-    # # Debugging Zeilen einfügen
-    # print(f"Number of data rows collected: {len(data_list)}")
-    # print(data_list[:5])  # Zeige die ersten 5 Datenzeilen an
+        # Convert to DataFrame and save to a CSV file for the current season
+        season_data = pd.DataFrame(rows, columns=headers)
+        season_file_path = f"data/nba_player_stats_{season}.csv"
+        season_data.to_csv(season_file_path, index=False)
+        print(f"Scraped and saved data for the {season} season to {season_file_path}.")
 
-    # Define the CSV file path
-    csv_file_path = "data/nba_stats.csv"
-    header = ["Player", "Team", "PTS", "REB"]
-    df = pd.DataFrame(data_list, columns=header)
+    except Exception as e:
+        print(f"Failed to scrape data for the {season} season: {e}")
 
-    # Save data for each season to the 'data' folder
-    # team_data = pd.DataFrame(rows, columns=headers + ['Season'])
-    df.to_csv(f'data/nba_stats.csv', index=False)
+# Combine all CSV files into one
+all_data = pd.DataFrame()
+for season in seasons:
+    season_file_path = f"data/nba_player_stats_{season}.csv"
+    if os.path.exists(season_file_path):
+        season_data = pd.read_csv(season_file_path)
+        all_data = pd.concat([all_data, season_data], ignore_index=True)
 
-    # # Write the data to a CSV file
-    # with open(csv_file_path, mode="w", newline="", encoding="utf-8") as csv_file:
-    #     writer = csv.writer(csv_file)
-    #     # Write the header for the relevant data
-    #     header = ["Player", "Team", "PTS", "REB"]
-    #     writer.writerow(header)
-    #     # Write the data rows
-    #     writer.writerows(data_list)
+# Save the combined data to a single CSV file
+combined_file_path = 'data/nba_player_stats_combined_2004_2024.csv'
+all_data.to_csv(combined_file_path, index=False)
+print(f"All data combined and saved to {combined_file_path}.")
 
-    print(f"Data has been successfully saved to {csv_file_path}")
-
-except TimeoutException as e:
-    print("TimeoutException: The element was not found within the given time.")
-    print(driver.page_source)  # Print the page source for debugging
-
-finally:
-    # Close the browser
-    driver.quit()
+# Close the browser
+driver.quit()
