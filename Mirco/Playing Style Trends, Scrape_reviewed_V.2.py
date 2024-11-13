@@ -65,13 +65,16 @@ for season in seasons:
                             if len(rows[0]) != len(headers):
                                 headers = headers[:len(rows[0])]  # Adjust headers to match row data
                             season_data = pd.DataFrame(rows, columns=headers)
+                            # Add the Season and Position columns
+                            season_data['Season'] = season
+                            season_data['Position'] = position
                             season_data.to_csv(f"data/nba_player_stats_{season}_{position}_page_{page_number}.csv",
                                                index=False, mode='a', header=not os.path.exists(
                                     f"data/nba_player_stats_{season}_{position}.csv"))
 
                         # Check if there is a next page button and click it
                         next_buttons = driver.find_elements(By.CLASS_NAME,
-                                                            'pagination__next')  # Update with the correct class name for the next button
+                                                            'stats-table-pagination__next')  # Updated class name
                         if next_buttons and next_buttons[0].is_displayed():
                             next_buttons[0].click()
                             page_number += 1
@@ -98,8 +101,10 @@ for season in seasons:
                     f"Column mismatch for the {season} season and {position} position. Adjusting headers to match rows.")
                 headers = headers[:len(rows[0])]  # Adjust headers to match the number of columns in rows
 
-            # Convert to DataFrame and save to a CSV file for the current season and position
+            # Convert to DataFrame and add the Season and Position columns
             season_data = pd.DataFrame(rows, columns=headers)
+            season_data['Season'] = season
+            season_data['Position'] = position
             season_file_path = f"data/nba_player_stats_{season}_{position}.csv"
             season_data.to_csv(season_file_path, index=False)
             print(f"Scraped and saved data for the {season} season and {position} position to {season_file_path}.")
