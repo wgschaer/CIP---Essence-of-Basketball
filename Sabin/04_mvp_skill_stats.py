@@ -5,44 +5,46 @@ import seaborn as sns
 # Load the cleaned dataset
 merged_df = pd.read_csv('data/cleaned_nba_data_mvp_with_teams.csv')
 
-# Step 1:  Set up the plotting style
+# Set up the plotting style
 sns.set(style="whitegrid")
 
-# Create a bar plot to visualize TRB, AST, STL, BLK for each MVP with player names
-metrics = ['PTS','TRB', 'AST', 'STL', 'BLK']
+# Define the metrics and their full names for the chart titles
+metrics = {
+    'PTS': 'Points',
+    'TRB': 'Total Rebounds',
+    'AST': 'Assists',
+    'STL': 'Steals',
+    'BLK': 'Blocks'
+}
+
+# Define a color palette for the different metrics
+colors = ['#FF6347', '#4682B4', '#32CD32', '#FFD700', '#8A2BE2']
+
+# Create a figure
 plt.figure(figsize=(14, 12))
 
 # Add player names to the x-axis
 merged_df['Label'] = merged_df['Year'].astype(str) + " - " + merged_df['Season MVP']
 
-# Step 2: Loop through each metric and plot with player names
-for i, metric in enumerate(metrics):
+# Loop through each metric and plot with player names
+for i, (metric, color) in enumerate(zip(metrics.keys(), colors)):
     plt.subplot(3, 2, i + 1)
-    sns.barplot(x='Label', y=metric, data=merged_df, palette='viridis')
+    sns.barplot(x='Label', y=metric, data=merged_df, color=color)
     plt.xticks(rotation=45, ha='right')
-    plt.title(f'{metric} by MVP (Player)')
+    plt.title(f'{metrics[metric]} by MVP', fontsize=14)
     plt.xlabel('Year - Season MVP')
-    plt.ylabel(metric)
+    plt.ylabel(metrics[metric])
+    plt.grid(axis='y')
 
+# Add an overall bold title
+plt.suptitle('MVP Skills Stats', fontsize=18, fontweight='bold', y=1.05)
+
+# Adjust layout
 plt.tight_layout()
-plt.show()
 
+# Save the plot
+plt.savefig('data/mvp_skills_stats.png', bbox_inches='tight')
+print("Plot saved as 'data/mvp_skills_stats.png'")
 
-# Step 3: Check if Season MVP's team is also the Champion Team
-merged_df['Season MVP'] = merged_df['MVP Team'] == merged_df['Champion Team']
-
-
-# Count how many times the MVP was also the champion
-mvp_championship_count = merged_df['MVP_Champion'].sum()
-total_years = merged_df.shape[0]
-
-print(f"\nThe MVP also won the Championship in the same season {mvp_championship_count} times out of {total_years} seasons.")
-
-# Step 4: Visualize the correlation
-plt.figure(figsize=(6, 4))
-sns.countplot(x='MVP_Champion', data=merged_df)
-plt.title('MVP Winning Championship in the Same Season')
-plt.xlabel('MVP Won Championship')
-plt.ylabel('Count')
-plt.xticks([0, 1], ['No', 'Yes'])
+# Display the plot
 plt.show()
