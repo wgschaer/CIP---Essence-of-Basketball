@@ -37,13 +37,13 @@ for i, (metric, color) in enumerate(zip(metrics.keys(), colors)):
     plt.grid(axis='y')
 
 # Add an overall bold title
-plt.suptitle('MVP Skills Stats', fontsize=18, fontweight='bold', y=1.05)
+plt.suptitle('MVP Skills Set', fontsize=18, fontweight='bold', y=1.05)
 
 # Adjust layout
 plt.tight_layout()
 
 # Save the plot
-plt.savefig('data/mvp_skills_stats.png', bbox_inches='tight')
+plt.savefig('data/mvp_skills_set.png', bbox_inches='tight')
 print("Plot saved as 'data/mvp_skills_stats.png'")
 
 # Display the plot
