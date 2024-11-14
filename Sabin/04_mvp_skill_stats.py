@@ -43,9 +43,5 @@ plt.suptitle('MVP Skills Set', fontsize=18, fontweight='bold', y=1.05)
 # Adjust layout
 plt.tight_layout()
 
-# Save the plot
-plt.savefig('data/mvp_skills_set.png', bbox_inches='tight')
-print("Plot saved as 'data/mvp_skills_stats.png'")
-
 # Display the plot
 plt.show()
