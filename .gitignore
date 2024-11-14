@@ -164,3 +164,5 @@ cython_debug/
 /Sabin/data/
 /Mirco/data/
 /data/
+/.idea/csv-editor.xml
+/.idea/other.xml
