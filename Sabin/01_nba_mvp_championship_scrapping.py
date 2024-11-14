@@ -29,7 +29,7 @@ def wait_for_element(by, value, timeout=10):
     """
     return WebDriverWait(driver, timeout).until(EC.presence_of_element_located((by, value)))
 
-# Function to extract NBA MVP data
+# Step 2: Function to extract NBA MVP data
 def extract_mvp_data():
     print("Extracting MVP data...")
 
@@ -71,7 +71,7 @@ def extract_mvp_data():
     print(mvp_df.head())
 
 
-# Function to extract NBA Playoffs data
+# Step 3: Function to extract NBA Playoffs data
 def extract_playoffs_data():
     print()
     print("Extracting Playoffs data...")

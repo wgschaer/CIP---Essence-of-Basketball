@@ -5,7 +5,7 @@ import seaborn as sns
 # Load the cleaned dataset
 merged_df = pd.read_csv('data/cleaned_nba_data_mvp_with_teams.csv')
 
-# Set up the plotting style
+# Step 1:  Set up the plotting style
 sns.set(style="whitegrid")
 
 # Create a bar plot to visualize TRB, AST, STL, BLK for each MVP with player names
@@ -15,7 +15,7 @@ plt.figure(figsize=(14, 12))
 # Add player names to the x-axis
 merged_df['Label'] = merged_df['Year'].astype(str) + " - " + merged_df['Season MVP']
 
-# Loop through each metric and plot with player names
+# Step 2: Loop through each metric and plot with player names
 for i, metric in enumerate(metrics):
     plt.subplot(3, 2, i + 1)
     sns.barplot(x='Label', y=metric, data=merged_df, palette='viridis')
@@ -38,7 +38,7 @@ total_years = merged_df.shape[0]
 
 print(f"\nThe MVP also won the Championship in the same season {mvp_championship_count} times out of {total_years} seasons.")
 
-# Visualize the correlation
+# Step 4: Visualize the correlation
 plt.figure(figsize=(6, 4))
 sns.countplot(x='MVP_Champion', data=merged_df)
 plt.title('MVP Winning Championship in the Same Season')
