@@ -39,8 +39,6 @@ total_years = merged_df.shape[0]
 print(f"\nThe MVP also won the Championship in the same season {mvp_championship_count} times out of {total_years} seasons.")
 
 # Visualize the correlation
-import seaborn as sns
-
 plt.figure(figsize=(6, 4))
 sns.countplot(x='MVP_Champion', data=merged_df)
 plt.title('MVP Winning Championship in the Same Season')
