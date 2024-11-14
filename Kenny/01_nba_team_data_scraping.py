@@ -33,7 +33,7 @@ with webdriver.Chrome(service=service) as driver:
     select_season_type = Select(dropdowns[1])
 
     # Define the range of seasons to scrape
-    target_seasons = [f"{year}-{str(year+1)[-2:]}" for year in range(2004, 2024)]
+    target_seasons = [f"{year}-{str(year + 1)[-2:]}" for year in range(2004, 2024)]
 
     # Loop through each season
     for season_str in target_seasons:

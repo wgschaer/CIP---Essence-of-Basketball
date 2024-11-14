@@ -34,7 +34,8 @@ mvp_teams = mvp_stats[['season', 'mvp team']].drop_duplicates().set_index('seaso
 
 # Step 4: Merge the datasets on 'season' and 'team', excluding the 'mvp team' column in the output
 try:
-    merged_data = pd.merge(team_stats, mvp_stats[['season', 'mvp team']].drop_duplicates(), left_on=["season", "team"], right_on=["season", "mvp team"], how="left")
+    merged_data = pd.merge(team_stats, mvp_stats[['season', 'mvp team']].drop_duplicates(), left_on=["season", "team"],
+                           right_on=["season", "mvp team"], how="left")
     print("Merging successful.")
 
     # Step 5: Create the 'is_mvp_team' column based on the MVP teams

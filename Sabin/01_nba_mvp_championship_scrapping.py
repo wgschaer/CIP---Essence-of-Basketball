@@ -1,4 +1,3 @@
-
 # Import necessary libraries
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -21,6 +20,7 @@ driver = webdriver.Chrome(service=service)
 if not os.path.exists('data'):
     os.makedirs('data')
 
+
 # Function to wait for an element to appear using Selenium
 def wait_for_element(by, value, timeout=10):
     """
@@ -28,6 +28,7 @@ def wait_for_element(by, value, timeout=10):
     Used for handling dynamic content with Selenium.
     """
     return WebDriverWait(driver, timeout).until(EC.presence_of_element_located((by, value)))
+
 
 # Function to extract NBA MVP data
 def extract_mvp_data():
@@ -51,7 +52,8 @@ def extract_mvp_data():
 
     # Locate the MVP table using BeautifulSoup
     mvp_table = soup.find('table', {'id': 'mvp_NBA'})
-    headers = ['Season', 'Lg', 'Player', 'Voting', 'Age', 'Tm', 'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK', 'FG%', '3P%', 'FT%', 'WS', 'WS/48']
+    headers = ['Season', 'Lg', 'Player', 'Voting', 'Age', 'Tm', 'G', 'MP', 'PTS', 'TRB', 'AST', 'STL', 'BLK', 'FG%',
+               '3P%', 'FT%', 'WS', 'WS/48']
     rows = mvp_table.find('tbody').find_all('tr')
 
     # Extract data from the MVP table rows

@@ -1,3 +1,4 @@
+# Import the necessary libraries
 import pandas as pd
 
 # Load the cleaned dataset
@@ -11,8 +12,8 @@ mvp_championship_count = df['MVP_Champion'].sum()
 total_years = df.shape[0]
 
 # Display the result
-print()
-print(f"The MVP also won the Championship in the same season: {mvp_championship_count} times out of {total_years}seasons.")
+print(f"\nThe MVP also won the Championship in the same season: {mvp_championship_count} times out of {total_years}"
+      f" seasons.")
 print(f"Percentage of MVPs winning the Championship in the same season: {mvp_championship_count / total_years:.2%}\n")
 
 # Step 3: Identify the player with the most MVPs in the dataset
@@ -35,15 +36,17 @@ print(f"Team with the most MVPs in the last 20 years: {most_mvp_team} ({most_mvp
 most_champion_team = df['Champion Team'].value_counts().idxmax()
 most_champion_team_count = df['Champion Team'].value_counts().max()
 print(f"Team with the most Championships in the last 20 years: {most_champion_team} ({most_champion_team_count} "
-      f"Championships)\n")
-
+      f"Championships)")
 
 # Step 7: Summary of Insights
-print("\nKey Insights:")
-print(f"1. {mvp_championship_count} out of {total_years} MVPs also won the championship the same year")
-print(f"2. {most_mvp_player} has won the most MVP awards(4), showcasing consistent excellence over multiple seasons.")
-print(f"3. The youngest MVP was {youngest_mvp['Season MVP']} at {youngest_mvp['Age']} years, while the oldest was "
-      f"{oldest_mvp['Season MVP']} at {oldest_mvp['Age']} years.")
-print(f"4. The team with the most MVPs is {most_mvp_team}, highlighting their ability to foster MVP-level talent.")
-print(f"5. The team with the most championships is {most_champion_team}, demonstrating their dominance in the league "
-      f"over the past two decades.")
+summary = f"""
+Key Insights:
+1. The MVP also won the Championship {mvp_championship_count} out of {total_years} times ({mvp_championship_count / total_years:.2%}).
+2. {most_mvp_player} has won the most MVP awards ({most_mvp_count}), showcasing consistent excellence.
+3. The youngest MVP was {youngest_mvp['Season MVP']} at {youngest_mvp['Age']} years old.
+4. The oldest MVP was {oldest_mvp['Season MVP']} at {oldest_mvp['Age']} years old.
+5. The team with the most MVPs is {most_mvp_team} with {most_mvp_team_count} MVPs.
+6. The team with the most Championships is {most_champion_team} with {most_champion_team_count} Championships.
+"""
+
+print("\n" + summary)

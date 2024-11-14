@@ -1,9 +1,10 @@
+# Import necessary libraries
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Step 1: Load the player stats dataset
-player_data = pd.read_csv("Mirco/data/nba_player_stats_cleaned.csv")
+player_data = pd.read_csv("Mirco/data/cleaned_nba_player_stats_2004_2024.csv")
 
 # Step 2: Select relevant numerical player metrics for correlation analysis
 numeric_columns = ['pts', 'ast', 'reb', 'stl', 'blk', 'tov', 'fg%', '3p%', 'ft%', 'fp', 'dd2', 'td3', '+/-']

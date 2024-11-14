@@ -1,3 +1,4 @@
+# Import necessary libraries
 import pandas as pd
 from unidecode import unidecode
 
@@ -8,7 +9,7 @@ print(mvp_df.head())
 print("\nColumns in MVP Dataset:", mvp_df.columns)
 
 # Step 2: Load the player stats dataset
-player_stats_df = pd.read_csv('data/nba_player_stats_cleaned.csv')
+player_stats_df = pd.read_csv('data/cleaned_nba_player_stats_2004_2024.csv')
 print("\nPlayer Stats Dataset - First 5 Rows:")
 print(player_stats_df.head())
 print("\nColumns in Player Stats Dataset:", player_stats_df.columns)

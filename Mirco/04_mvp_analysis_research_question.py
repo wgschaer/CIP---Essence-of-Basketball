@@ -1,3 +1,4 @@
+# Import necessary libraries
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -23,12 +24,29 @@ plt.show()
 total_mvp_by_position = mvp_data['Position'].value_counts()
 
 # Step 4: Plot the total distribution of MVPs by position
-plt.figure(figsize=(8, 5))
-total_mvp_by_position.plot(kind='bar', color='skyblue')
-plt.title('Total Number of MVPs by Position')
-plt.xlabel('Position')
-plt.ylabel('Number of MVPs')
-plt.xticks(rotation=0)
+
+# Define custom colors for the bar plot
+color_map = ['#1f77b4', '#ff7f0e', '#2ca02c']  # Blue, Orange, Green
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(
+    total_mvp_by_position.index,
+    total_mvp_by_position.values,
+    color=color_map[:len(total_mvp_by_position)],  # Use distinct colors
+    edgecolor='black'
+)
+plt.title('Total Number of MVPs by Position', fontsize=16)
+plt.xlabel('Position', fontsize=14)
+plt.ylabel('Number of MVPs', fontsize=14)
+plt.xticks(rotation=0, fontsize=12)
+plt.yticks(fontsize=12)
+plt.grid(axis='y', linestyle='--', alpha=0.6)
+
+# Annotate bar plot with values
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 2, yval + 0.5, int(yval), ha='center', va='bottom', fontsize=12)
+
 plt.tight_layout()
 plt.show()
 

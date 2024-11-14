@@ -44,7 +44,8 @@ nba_data = nba_data[(nba_data['GP'] > 0) & (nba_data['W'] >= 0) & (nba_data['L']
 nba_data = nba_data[(nba_data['eFG%'] >= 0) & (nba_data['eFG%'] <= 100)]
 nba_data = nba_data[(nba_data['TS%'] >= 0) & (nba_data['TS%'] <= 100)]
 filtered_row_count = nba_data.shape[0]
-print(f"Step 4: Filtered data based on expected value ranges. Rows reduced from {initial_row_count} to {filtered_row_count}.")
+print(f"Step 4: Filtered data based on expected value ranges. Rows reduced from {initial_row_count} to "
+      f"{filtered_row_count}.")
 
 # 5. Data Enrichment: Calculate Win Percentage
 nba_data['Win%'] = (nba_data['W'] / nba_data['GP'] * 100).round(2)

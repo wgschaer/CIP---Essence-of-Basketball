@@ -1,3 +1,4 @@
+# Import necessary libraries
 import pandas as pd
 from unidecode import unidecode
 
@@ -24,6 +25,7 @@ merged_df['Finals MVP'] = merged_df['Finals MVP'].apply(lambda x: unidecode(x) i
 merged_df.rename(columns={'Player': 'Season MVP'}, inplace=True)
 merged_df.rename(columns={'Champion': 'Champion Team'}, inplace=True)
 
+
 # Function to format names to "F. Last"
 def format_name(name):
     if isinstance(name, str):
@@ -31,6 +33,7 @@ def format_name(name):
         if len(parts) == 2:  # Check if there are exactly two parts
             return f"{parts[0][0]}. {parts[1]}"
     return name
+
 
 # Apply formatting to the 'Season MVP' column
 merged_df['Season MVP'] = merged_df['Season MVP'].apply(format_name)
@@ -40,14 +43,14 @@ merged_df.rename(columns={'Tm': 'MVP Team'}, inplace=True)
 
 # Dictionary to map team abbreviations to full names
 team_mapping = {
-    'ATL': 'Atlanta Hawks','BOS': 'Boston Celtics','BKN': 'Brooklyn Nets', 'CHA': 'Charlotte Hornets',
-    'CHI': 'Chicago Bulls', 'CLE': 'Cleveland Cavaliers','DAL': 'Dallas Mavericks','DEN': 'Denver Nuggets',
-    'DET': 'Detroit Pistons','GSW': 'Golden State Warriors','HOU': 'Houston Rockets','IND': 'Indiana Pacers',
-    'LAC': 'Los Angeles Clippers','LAL': 'Los Angeles Lakers','MEM': 'Memphis Grizzlies','MIA': 'Miami Heat',
-    'MIL': 'Milwaukee Bucks','MIN': 'Minnesota Timberwolves','NOP': 'New Orleans Pelicans','NYK': 'New York Knicks',
-    'OKC': 'Oklahoma City Thunder','ORL': 'Orlando Magic','PHI': 'Philadelphia 76ers','PHO': 'Phoenix Suns',
-    'POR': 'Portland Trail Blazers','SAC': 'Sacramento Kings','SAS': 'San Antonio Spurs','TOR': 'Toronto Raptors',
-    'UTA': 'Utah Jazz','WAS': 'Washington Wizards'
+    'ATL': 'Atlanta Hawks', 'BOS': 'Boston Celtics', 'BKN': 'Brooklyn Nets', 'CHA': 'Charlotte Hornets',
+    'CHI': 'Chicago Bulls', 'CLE': 'Cleveland Cavaliers', 'DAL': 'Dallas Mavericks', 'DEN': 'Denver Nuggets',
+    'DET': 'Detroit Pistons', 'GSW': 'Golden State Warriors', 'HOU': 'Houston Rockets', 'IND': 'Indiana Pacers',
+    'LAC': 'Los Angeles Clippers', 'LAL': 'Los Angeles Lakers', 'MEM': 'Memphis Grizzlies', 'MIA': 'Miami Heat',
+    'MIL': 'Milwaukee Bucks', 'MIN': 'Minnesota Timberwolves', 'NOP': 'New Orleans Pelicans', 'NYK': 'New York Knicks',
+    'OKC': 'Oklahoma City Thunder', 'ORL': 'Orlando Magic', 'PHI': 'Philadelphia 76ers', 'PHO': 'Phoenix Suns',
+    'POR': 'Portland Trail Blazers', 'SAC': 'Sacramento Kings', 'SAS': 'San Antonio Spurs', 'TOR': 'Toronto Raptors',
+    'UTA': 'Utah Jazz', 'WAS': 'Washington Wizards'
 }
 
 # Apply the team mapping
@@ -60,7 +63,8 @@ for col in percentage_columns:
 
 # Step 9: Display the final cleaned data
 print("\nCleaned Merged Data - First 5 Rows:")
-print(merged_df[['Year','Season MVP','MVP Team','Champion Team','Finals MVP','PTS','TRB','AST','FG%','3P%','FT%']]
+print(merged_df[
+          ['Year', 'Season MVP', 'MVP Team', 'Champion Team', 'Finals MVP', 'PTS', 'TRB', 'AST', 'FG%', '3P%', 'FT%']]
       .head())
 
 # Step 10: Save the cleaned data to a new CSV file

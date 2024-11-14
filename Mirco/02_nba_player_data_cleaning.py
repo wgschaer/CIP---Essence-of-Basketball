@@ -1,23 +1,28 @@
+# Import necessary libraries
 import pandas as pd
+import os
 
-# Load the dataset
+# Step 1: Load the dataset
 file_path = 'data/nba_player_stats_combined_2004_2024.csv'
+if not os.path.exists(file_path):
+    raise FileNotFoundError(f"File not found: {file_path}")
+
 data = pd.read_csv(file_path)
 
-# Step 1: Remove unnecessary columns
+# Step 2: Remove unnecessary columns
 data = data.drop(columns=['Unnamed: 0'])
 
-# Step 2: Handle missing values
+# Step 3: Handle missing values
 data = data.dropna()  # Drop rows with any missing values
 
-# Step 3: Standardize column names
+# Step 4: Standardize column names
 data.columns = data.columns.str.lower().str.replace(' ', '_')
 
-# Step 4: Replace position letters with full words
+# Step 5: Replace position letters with full words
 position_mapping = {'F': 'Forward', 'G': 'Guard', 'C': 'Center'}
 data['position'] = data['position'].map(position_mapping)
 
-# Step 5: Replace team abbreviations with full names (sorted alphabetically)
+# Step 6: Replace team abbreviations with full names (sorted alphabetically)
 team_mapping = {
     'ATL': 'Atlanta Hawks', 'BOS': 'Boston Celtics', 'BKN': 'Brooklyn Nets',
     'CHA': 'Charlotte Hornets', 'CHI': 'Chicago Bulls', 'CLE': 'Cleveland Cavaliers',
@@ -33,7 +38,7 @@ team_mapping = {
 }
 data['team'] = data['team'].map(team_mapping)
 
-# Step 6: Ensure numeric columns are properly formatted
+# Step 7: Ensure numeric columns are properly formatted
 numeric_columns = [
     'age', 'gp', 'w', 'l', 'min', 'pts', 'fgm', 'fga', 'fg%', '3pm', '3pa', '3p%',
     'ftm', 'fta', 'ft%', 'oreb', 'dreb', 'reb', 'ast', 'tov', 'stl', 'blk', 'pf',
@@ -41,12 +46,11 @@ numeric_columns = [
 ]
 data[numeric_columns] = data[numeric_columns].apply(pd.to_numeric, errors='coerce')
 
-# Step 7: Remove duplicate rows
+# Step 8: Remove duplicate rows
 data = data.drop_duplicates()
 
-# Step 8: Save the cleaned data
-cleaned_file_path = 'data/nba_player_stats_cleaned.csv'
+# Step 9: Save the cleaned data
+cleaned_file_path = 'data/cleaned_nba_player_stats_2004_2024.csv'
 data.to_csv(cleaned_file_path, index=False)
 
 print(f"Data cleaning completed. Cleaned data saved to {cleaned_file_path}.")
-
