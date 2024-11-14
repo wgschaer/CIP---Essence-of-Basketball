@@ -2,7 +2,7 @@ import pandas as pd
 from unidecode import unidecode
 
 # Step 1: Load the MVP dataset
-mvp_df = pd.read_csv('data/cleaned_nba_data_mvp_with_teams.csv')
+mvp_df = pd.read_csv('../Sabin/data/cleaned_nba_data_mvp_with_teams.csv')
 print("MVP Dataset - First 5 Rows:")
 print(mvp_df.head())
 print("\nColumns in MVP Dataset:", mvp_df.columns)
